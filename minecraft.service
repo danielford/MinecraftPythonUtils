@@ -1,0 +1,14 @@
+[Unit]
+Description="Minecraft Server"
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/bedrock-server-1.19.63.01
+User=ubuntu
+ExecStart=/home/ubuntu/MCPythonUtils/.venv/bin/bds-nanny --log_dir /var/log/minecraft /home/ubuntu/bedrock-server-1.19.63.01
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
