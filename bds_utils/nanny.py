@@ -20,8 +20,6 @@ class BedrockServerNanny:
     LOG_FORMAT = '[%(asctime)s] [%(levelname)s] %(message)s'
 
     def __init__(self, bds_dir, log_dir=None):
-
-
         if log_dir:
             server_log = os.path.join(log_dir, 'server.log')
             metrics_log = os.path.join(log_dir, 'metrics.log')
@@ -43,7 +41,6 @@ class BedrockServerNanny:
             logging.basicConfig(format=self.LOG_FORMAT, level=logging.INFO)
             self.logger = logging.getLogger(self.__class__.__name__)
             self.metrics_logger = self.logger
-
 
         self.bds_dir = bds_dir
         self.command_queue = collections.deque()
