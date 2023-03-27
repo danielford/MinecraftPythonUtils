@@ -1,0 +1,54 @@
+wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.19.63.01.zip
+which unzip
+unzip bedrock-server-1.19.63.01.zip
+ls
+rm -rf allowlist.json bedrock_server bedrock_server_how_to.html behavior_packs/
+ls
+rm -rf bedrock_server_symbols.debug
+ls
+mkdir bedrock-server-1.19.63.01
+cd bedrock-server-1.19.63.01/
+mv ../bedrock-server-1.19.63.01.zip .
+ls
+unzip bedrock-server-1.19.63.01.zip
+ls
+cd ../
+cat bedrock-server-1.19.61/allowlist.json
+cat bedrock-server-1.19.61/permissions.json
+cat bedrock-server-1.19.61/server.properties
+cat bedrock-server-1.19.63.01/server.properties
+cat bedrock-server-1.19.61/server.properties
+vimdiff bedrock-server-1.19.61/server.properties bedrock-server-1.19.63.01/server.properties
+cp bedrock-server-1.19.61/server.properties bedrock-server-1.19.63.01/
+cp bedrock-server-1.19.61/allowlist.json bedrock-server-1.19.63.01/
+cp bedrock-server-1.19.61/permissions.json bedrock-server-1.19.63.01/
+ls bedrock-server-1.19.61/worlds/
+ls bedrock-server-1.19.63.01/worlds/
+mkdir bedrock-server-1.19.63.01/worlds/
+cp -r bedrock-server-1.19.61/worlds bedrock-server-1.19.63.01/
+ls -l bedrock-server-1.19.61/worlds
+ls -l bedrock-server-1.19.61/worlds/world1
+mkdir bedrock-server-1.19.63.01/worlds/
+ls -l bedrock-server-1.19.63.01/worlds/
+ls -l bedrock-server-1.19.63.01/worlds/world1
+ls -l bedrock-server-1.19.61/
+sudo systemctl stop minecraft
+sudo vim /etc/systemd/system/minecraft.service
+Description="Minecraft Server"
+After=syslog.target network.target remote-fs.target nss-lookup.target
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/bedrock-server-1.19.63
+User=ubuntu
+ExecStart=/home/ubuntu/MCPythonUtils/.venv/bin/bds-nanny --log_dir /var/log/minecraft /home/ubuntu/bedrock-server-1.19.63
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
+cd bedrock-server-1.19.63.01/
+sudo vim /etc/systemd/system/minecraft.service
+pwd
+cat /etc/systemd/system/minecraft.service
+/home/ubuntu/MCPythonUtils/.venv/bin/bds-nanny --log_dir /var/log/minecraft /home/ubuntu/bedrock-server-1.19.63.01
+sudo systemctl minecraft start
+sudo systemctl start minecraft
+less /var/log/minecraft/server.log
