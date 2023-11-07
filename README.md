@@ -7,7 +7,24 @@ A Python package to help with running Bedrock Dedicated Server (BDS) on Linux (e
 
 
 ## Setup
-TODO
+After checking out the package somewhere, 'cd' into the package root and run:
+```
+# create and activate a virtual environment (venv)
+python3 -m venv .venv
+. .venv/bin/activate
+
+# install 'build' utility
+pip install --upgrade build
+
+# build the package
+python -m build
+
+# install the package:
+pip install .
+
+# install in 'development mode':
+pip install --editable .
+```
 
 ## Usage
 TODO
