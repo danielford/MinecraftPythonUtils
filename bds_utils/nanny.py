@@ -33,8 +33,9 @@ class BedrockServerNanny:
             metrics_handler.setFormatter(logging.Formatter('[%(asctime)s] %(message)s'))
 
             self.metrics_logger = logging.getLogger('metrics')
+            self.metrics_logger.setLevel(logging.INFO)
             self.metrics_logger.addHandler(metrics_handler)
-            self.metrics_logger.propagate = False
+            #self.metrics_logger.propagate = False
 
             self.logger = logging.getLogger(self.__class__.__name__)
         else:
@@ -57,6 +58,7 @@ class BedrockServerNanny:
 
     def __start_metrics_emitter(self):
         def log_metrics(num_players, max_players):
+            self.__log('in metrics logger')
             self.metrics_logger.info('NUM_PLAYERS %d' % int(num_players))
             self.metrics_logger.info('MAX_PLAYERS %d' % int(max_players))
 
@@ -80,13 +82,13 @@ class BedrockServerNanny:
             if line:
                 self.__log(line)
 
-        if output and self.running_command:
-            if self.running_command.check(output):
+        if self.running_command:
+            if output and self.running_command.check(output):
                 self.running_command = None
-
-        if self.command_queue:
-            self.running_command = self.command_queue.popleft()
-            self.running_command.send(self.proc.stdin)
+        else:
+            if self.command_queue:
+                self.running_command = self.command_queue.popleft()
+                self.running_command.send(self.proc.stdin)
 
         if output:
             return True
